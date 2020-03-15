@@ -5,3 +5,4 @@ poetry.lock
 house-account-manage.json
 .vscode
 .idea
+__pycache__
