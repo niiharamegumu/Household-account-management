@@ -3,7 +3,7 @@ from app.service.gs_command import GSCommandService
 
 input_dict = {
     'month': '2020/03',
-    'method_mode': 'select_month'
+    'method_mode': 'SPENDING_MONTH'
 }
 
 gs_data_access = GoogleSpreadsheetsDataAccess(

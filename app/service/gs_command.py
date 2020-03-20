@@ -7,10 +7,10 @@ class GSCommandService:
         self.gs_data_access = gs_data_access
 
     def run(self, input_dict: dict):
-        if input_dict['method_mode'].upper() == 'SELECT_MONTH':
-            self.get_house_manage_for_month(month=input_dict['month'])
+        if input_dict['method_mode'].upper() == 'SPENDING_MONTH':
+            self.output_spending_for_month(month=input_dict['month'])
 
-    def get_house_manage_for_month(self, month: str):
+    def output_spending_for_month(self, month: str):
         food = self.gs_data_access.get_range_value(
             sheet=month, start_cell='G5', end_cell='I5')
         miscellaneous = self.gs_data_access.get_range_value(
