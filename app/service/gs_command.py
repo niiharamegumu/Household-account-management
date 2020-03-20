@@ -1,5 +1,5 @@
-from gspread.models import Spreadsheet
 from app.dataaccess.google_spreadsheets import GoogleSpreadsheetsDataAccess
+from app.data.output_txt import output_select_spending_for_month
 
 
 class GSCommandService:
@@ -22,30 +22,6 @@ class GSCommandService:
         total = self.gs_data_access.get_cell_by_label(
             sheet=month, label='H10')
 
-        text = f'''
-        【{month}の支出を表示】
-        -------------------------
-        ・食料品
-        　　現金    {food[0].value}
-        　　クレカ  {food[1].value}
-        　　合計    {food[2].value}
-        -------------------------
-        ・雑費
-        　　現金    {miscellaneous[0].value}
-        　　クレカ  {miscellaneous[1].value}
-        　　合計    {miscellaneous[2].value}
-        -------------------------
-        ・外食費
-        　　現金    {eating_out[0].value}
-        　　クレカ  {eating_out[1].value}
-        　　合計    {eating_out[2].value}
-        -------------------------
-        ・その他
-        　　現金    {other[0].value}
-        　　クレカ  {other[1].value}
-        　　合計    {other[2].value}
-        -------------------------
-        ・合計      {total.value}
-        -------------------------
-        '''
-        print(text)
+        output_select_spending_for_month(
+            month=month, food=food, miscellaneous=miscellaneous,
+            eating_out=eating_out, other=other, total=total)
