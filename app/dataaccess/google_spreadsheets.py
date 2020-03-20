@@ -26,3 +26,9 @@ class GoogleSpreadsheetsDataAccess:
 
     def get_cell_by_label(self, sheet: str, label: str):
         return self.spreadsheet.worksheet(sheet).acell(label)
+
+    def duplicate_sheet(self, original: str, new_sheet_name: str):
+        sheet = self.spreadsheet.worksheet(original)
+        self.spreadsheet.duplicate_sheet(
+            source_sheet_id=sheet.id, new_sheet_name=new_sheet_name,
+            insert_sheet_index=len(self.spreadsheet.worksheets()))
