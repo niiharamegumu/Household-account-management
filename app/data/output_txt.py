@@ -32,3 +32,25 @@ def output_select_spending_for_month(
 -------------------------
 '''
     print(text)
+
+
+def output_message_success(message: str):
+    _len = len(message)
+    text = f'''
+{'='*_len}
+Success!!!
+{message}
+{'='*_len}
+'''
+    print(text)
+
+
+def output_message_error(message: str):
+    _len = len(message)
+    text = f'''
+{'='*_len}
+Failure......
+{message}
+{'='*_len}
+'''
+    print(text)
