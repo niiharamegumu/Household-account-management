@@ -1,5 +1,7 @@
 from app.dataaccess.google_spreadsheets import GoogleSpreadsheetsDataAccess
 from app.data.output_txt import output_select_spending_for_month
+from app.data.output_txt import output_message_success
+from app.data.output_txt import output_message_error
 
 
 class GSCommandService:
@@ -7,8 +9,11 @@ class GSCommandService:
         self.gs_data_access = gs_data_access
 
     def run(self, input_dict: dict):
-        if input_dict['method_mode'].upper() == 'SPENDING_MONTH':
+        if input_dict['method_mode'].upper() == '月の支出':
             self.output_spending_for_month(month=input_dict['month'])
+        if input_dict['method_mode'].upper() == 'シート複製':
+            self.crete_sheet_for_month(original=input_dict['copy_original'],
+                                       new_sheet_name=input_dict['new_sheet_name'])
 
     def output_spending_for_month(self, month: str):
         food = self.gs_data_access.get_range_value(
@@ -25,3 +30,12 @@ class GSCommandService:
         output_select_spending_for_month(
             month=month, food=food, miscellaneous=miscellaneous,
             eating_out=eating_out, other=other, total=total)
+
+    def crete_sheet_for_month(self, original: str, new_sheet_name: str):
+        try:
+            self.gs_data_access.duplicate_sheet(
+                original=original, new_sheet_name=new_sheet_name)
+            output_message_success(
+                message=f'シート【 {new_sheet_name} 】を作成しました。')
+        except Exception as e:
+            output_message_error(message=e.args[0]['message'])
