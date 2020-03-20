@@ -12,7 +12,7 @@ class GSCommandService:
         if input_dict['method_mode'].upper() == '月の支出':
             self.output_spending_for_month(month=input_dict['month'])
         if input_dict['method_mode'].upper() == 'シート複製':
-            self.crete_sheet_for_month(original=input_dict['copy_original'],
+            self.duplicate_sheet(original=input_dict['copy_original'],
                                        new_sheet_name=input_dict['new_sheet_name'])
 
     def output_spending_for_month(self, month: str):
@@ -31,7 +31,7 @@ class GSCommandService:
             month=month, food=food, miscellaneous=miscellaneous,
             eating_out=eating_out, other=other, total=total)
 
-    def crete_sheet_for_month(self, original: str, new_sheet_name: str):
+    def duplicate_sheet(self, original: str, new_sheet_name: str):
         try:
             self.gs_data_access.duplicate_sheet(
                 original=original, new_sheet_name=new_sheet_name)
