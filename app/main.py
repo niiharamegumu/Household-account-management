@@ -1,21 +1,14 @@
-from app.utils.settings import EnvironmentVar
-from app.dataaccess.google_spreadsheets import GoogleSpreadsheets
+from app.dataaccess.google_spreadsheets import GoogleSpreadsheetsDataAccess
+from app.service.gs_command import GSCommandService
 
 input_dict = {
-    'work_field_name': 'HOUSE_MANAGE_FIELD',
-    'spread_sheet_name': '2020/03'
+    'month': '2020/03',
+    'method_mode': 'select_month'
 }
 
-google_spreadsheets = GoogleSpreadsheets(environment_var=EnvironmentVar())
-gc = google_spreadsheets.gc
+gs_data_access = GoogleSpreadsheetsDataAccess(
+    work_field_name='HOUSE_MANAGE_FIELD')
+gs_command_service = GSCommandService(
+    gs_data_access=gs_data_access)
+gs_command_service.run(input_dict=input_dict)
 
-spreadsheets_key = google_spreadsheets.get_spreadsheets_key_by_work_field_name(
-    work_field_name=input_dict['work_field_name'])
-
-work_field = gc.open_by_key(spreadsheets_key)
-work_sheets = work_field.worksheets()
-
-print(work_field.worksheet(input_dict['spread_sheet_name']).title)
-
-for sheet in work_sheets:
-    print(sheet.title)
